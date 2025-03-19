@@ -23,6 +23,8 @@ router.post('/', (req, res) => {
     const { title, description, deadline, priority, done } = req.body;
     const newTask = {
         id: uuidv4(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         title,
         description,
         deadline,
@@ -43,6 +45,7 @@ router.put('/:id', (req, res) => {
     }
     const updatedTask = { ...tasksData.tasks[taskIndex], ...req.body, id:id };
     tasksData.tasks[taskIndex] = updatedTask;
+    tasksData.tasks[taskIndex].updated_at = new Date().toISOString();
     res.json(updatedTask);
 });
 
