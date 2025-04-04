@@ -11,8 +11,6 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-//.... code as before
-
 // register(Create)/Authenticate User
 router.post('/', asyncHandler(async (req, res) => {
     try {
@@ -33,6 +31,15 @@ router.post('/', asyncHandler(async (req, res) => {
 
 async function registerUser(req, res) {
     // Add input validation logic here
+    // Exercise Auth Lab (API 4)
+    
+    if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(req.body.password)) {
+        return res.status(400).json({
+            success: false,
+            msg: 'Password must be at least 8 characters long and include at least one letter, one number, and one special character.'
+        });
+    }
+
     await User.create(req.body);
     res.status(201).json({ success: true, msg: 'User successfully created.' });
 }
