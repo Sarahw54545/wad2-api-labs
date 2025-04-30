@@ -4,9 +4,10 @@ import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); // eslint-disable-line
 
-// Get all tasks
+// Get a user's tasks
 router.get('/', async (req, res) => {
-    const tasks = await Task.find().populate('userId', 'username');
+    console.log(req.user);
+    const tasks = await Task.find({ userId: `${req.user._id}`});
     res.status(200).json(tasks);
 });
 
